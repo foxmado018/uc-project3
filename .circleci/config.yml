@@ -216,13 +216,13 @@ jobs:
   
   run-migrations:
     docker:
-      - image: cimg/python:3.10
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - install_awscli
-      - install_nodejs
-      - restore_cache:
-          keys: ['backend-deps-{{ checksum "backend/package-lock.json" }}']
+      #- install_nodejs
+      #- restore_cache:
+          #keys: ['backend-deps-{{ checksum "backend/package-lock.json" }}']
       - run:
           name: Run migrations
           command: |
@@ -241,9 +241,9 @@ jobs:
             fi
       - destroy-environment
       - revert-migrations
-     # Here's where you will add some code to rollback on failure      
+    
 
-          
+    
 
 workflows:
   default:
@@ -267,3 +267,4 @@ workflows:
           requires: [deploy-infrastructure]        
       - run-migrations:
           requires: [configure-infrastructure]
+      
